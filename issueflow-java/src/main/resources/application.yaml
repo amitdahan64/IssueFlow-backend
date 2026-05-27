@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: issueflow
+  datasource:
+    url: jdbc:postgresql://localhost:5432/issueflow
+    username: issueflow
+    password: issueflow
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  sql:
+    init:
+      mode: never
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:change-me-please-this-must-be-at-least-32-bytes-long-for-hs256}
+    ttl-seconds: 3600
+
+issueflow:
+  escalation:
+    fixed-delay-ms: 60000
+  attachments:
+    max-bytes: 10485760
+    allowed-content-types: image/png,image/jpeg,application/pdf,text/plain
+  auto-assign:
+    enabled: true
