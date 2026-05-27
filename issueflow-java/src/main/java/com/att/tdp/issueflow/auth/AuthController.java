@@ -47,7 +47,8 @@ public class AuthController {
                 .orElseThrow(() -> new BadCredentialsException("Invalid username or password."));
 
         JwtService.Issued issued = jwtService.issue(user);
-        auditService.logSystem(AuditAction.LOGIN, EntityType.AUTH, user.getId());
+        // No SecurityContext yet — log() records actor=SYSTEM/performedBy=null with entityId=user.id.
+        auditService.log(AuditAction.LOGIN, EntityType.AUTH, user.getId());
         return LoginResponse.bearer(issued.token(), issued.expiresInSeconds());
     }
 
@@ -56,7 +57,7 @@ public class AuthController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getPrincipal() instanceof AuthenticatedUser principal) {
             denylistService.deny(principal.jti(), principal.tokenExpiresAt());
-            auditService.logSystem(AuditAction.LOGOUT, EntityType.AUTH, principal.userId());
+            auditService.log(AuditAction.LOGOUT, EntityType.AUTH, principal.userId());
         }
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok().build();
