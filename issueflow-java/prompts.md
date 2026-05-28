@@ -2,7 +2,7 @@
 
 ## Model
 
-**Claude Opus 4.7** (`claude-opus-4-7`), via the Claude Code CLI inside a VS Code extension.
+**Claude Opus 4.7** (`claude-opus-4-7`) for planning and implementation, Sonnet 4.6 for questions and investigation of the code, via the Claude Code CLI inside a VS Code extension.
 
 ## Skills, Instructions, and Artefacts Committed to the Repo
 
