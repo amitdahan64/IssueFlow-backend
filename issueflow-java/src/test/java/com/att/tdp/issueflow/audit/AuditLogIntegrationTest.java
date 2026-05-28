@@ -119,13 +119,13 @@ class AuditLogIntegrationTest {
     }
 
     @Test
-    void POST_users_update_writes_an_UPDATE_audit_row_with_USER_actor() throws Exception {
+    void PATCH_users_update_writes_an_UPDATE_audit_row_with_USER_actor() throws Exception {
         User alice = seedUser("alice", Role.DEVELOPER, "secret1");
         String token = login("alice", "secret1");
         auditRepo.deleteAll(); // clear LOGIN row so we isolate UPDATE
 
         UserUpdateDto dto = new UserUpdateDto("Alice Updated", Role.ADMIN);
-        mockMvc.perform(post("/users/update/" + alice.getId())
+        mockMvc.perform(patch("/users/" + alice.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto))
                         .header("Authorization", "Bearer " + token))
