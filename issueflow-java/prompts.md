@@ -12,7 +12,8 @@
 | [`run.md`](run.md)         | Setup / build / run / test / demo `curl` flow.                                                                                                                         |
 | [`prompts.md`](prompts.md) | This file.                                                                                                                                                             |
 
-No custom Claude skills, hooks, or sub-agent definitions were committed — the work used Claude Code's built-in **Plan mode** (which spawned a single read-only `Plan` sub-agent during the planning phase) and standard `Edit` / `Read` / `Bash` tool calls. Tool invocations and file writes are reflected in the resulting git history.
+superpowers@claude-plugins-official was used in this project.
+**Plan mode** (which spawned a single read-only `Plan` sub-agent during the planning phase) and standard `Edit` / `Read` / `Bash` tool calls. Tool invocations and file writes are reflected in the resulting git history.
 
 ---
 
