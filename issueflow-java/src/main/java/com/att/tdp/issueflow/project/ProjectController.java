@@ -4,6 +4,7 @@ import com.att.tdp.issueflow.project.dto.ProjectCreateDto;
 import com.att.tdp.issueflow.project.dto.ProjectResponseDto;
 import com.att.tdp.issueflow.project.dto.ProjectUpdateDto;
 import com.att.tdp.issueflow.project.dto.WorkloadEntryDto;
+import com.att.tdp.issueflow.workload.WorkloadService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final WorkloadService workloadService;
 
     @GetMapping
     public List<ProjectResponseDto> getAll() {
@@ -60,13 +62,8 @@ public class ProjectController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * Phase 4 stub. Real workload aggregation lands in Phase 8 alongside auto-assignment.
-     */
     @GetMapping("/{projectId}/workload")
     public List<WorkloadEntryDto> workload(@PathVariable Long projectId) {
-        // Verify project exists so callers get a sensible 404 for missing projects
-        projectService.findById(projectId);
-        return List.of();
+        return workloadService.computeForProject(projectId);
     }
 }

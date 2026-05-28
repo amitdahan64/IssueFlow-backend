@@ -39,6 +39,7 @@ security:
 
 issueflow:
   escalation:
+    enabled: true
     fixed-delay-ms: 60000
   attachments:
     max-bytes: 10485760

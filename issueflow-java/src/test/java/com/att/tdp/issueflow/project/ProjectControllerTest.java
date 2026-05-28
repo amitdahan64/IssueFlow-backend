@@ -268,13 +268,16 @@ class ProjectControllerTest {
     }
 
     @Test
-    void GET_workload_returns_empty_list_stub() throws Exception {
+    void GET_workload_includes_developers_with_zero_counts() throws Exception {
         Long id = createProject("Alpha");
+        // dev1 (the project owner here) is the only DEVELOPER and has 0 open tickets.
         mockMvc.perform(get("/projects/" + id + "/workload")
                         .header("Authorization", "Bearer " + developerToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$.length()").value(0));
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].username").value("dev1"))
+                .andExpect(jsonPath("$[0].openTicketCount").value(0));
     }
 
     @Test

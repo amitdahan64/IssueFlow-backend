@@ -73,6 +73,11 @@ public class TicketService {
 
         Ticket saved = ticketRepository.save(ticket);
         auditService.log(AuditAction.CREATE, EntityType.TICKET, saved.getId());
+        // Spec 3.8: auto-assign produces a SYSTEM audit row when the client
+        // omitted assigneeId and the resolver picked one for us.
+        if (dto.assigneeId() == null && resolvedAssignee != null) {
+            auditService.logSystem(AuditAction.AUTO_ASSIGN, EntityType.TICKET, saved.getId());
+        }
         return saved;
     }
 

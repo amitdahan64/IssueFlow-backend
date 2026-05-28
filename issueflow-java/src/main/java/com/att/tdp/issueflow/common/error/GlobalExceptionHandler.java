@@ -45,6 +45,11 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.PAYLOAD_TOO_LARGE, "Uploaded file exceeds the maximum allowed size.", req);
     }
 
+    @ExceptionHandler(PayloadTooLargeException.class)
+    public ResponseEntity<ApiError> handlePayloadTooLarge(PayloadTooLargeException ex, HttpServletRequest req) {
+        return build(HttpStatus.PAYLOAD_TOO_LARGE, ex.getMessage(), req);
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiError> handleDataIntegrity(DataIntegrityViolationException ex, HttpServletRequest req) {
         return build(HttpStatus.CONFLICT, "Data integrity violation (likely a duplicate or missing FK).", req);
