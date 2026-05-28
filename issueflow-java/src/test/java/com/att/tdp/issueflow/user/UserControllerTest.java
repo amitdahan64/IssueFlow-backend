@@ -138,10 +138,10 @@ class UserControllerTest {
     }
 
     @Test
-    void PATCH_users_update_returns_200() throws Exception {
+    void POST_users_update_returns_200() throws Exception {
         UserUpdateDto dto = new UserUpdateDto("Jane Doe", Role.ADMIN);
 
-        mockMvc.perform(patch("/users/3")
+        mockMvc.perform(post("/users/update/3")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
@@ -150,11 +150,11 @@ class UserControllerTest {
     }
 
     @Test
-    void PATCH_users_update_returns_404_when_missing() throws Exception {
+    void POST_users_update_returns_404_when_missing() throws Exception {
         UserUpdateDto dto = new UserUpdateDto("Jane Doe", Role.ADMIN);
         willThrow(NotFoundException.of("User", 99L)).given(userService).update(eq(99L), any());
 
-        mockMvc.perform(patch("/users/99")
+        mockMvc.perform(post("/users/update/99")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
