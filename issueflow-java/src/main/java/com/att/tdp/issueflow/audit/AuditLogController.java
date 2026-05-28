@@ -5,7 +5,6 @@ import com.att.tdp.issueflow.common.domain.AuditAction;
 import com.att.tdp.issueflow.common.domain.AuditActor;
 import com.att.tdp.issueflow.common.domain.EntityType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuditLogController {
 
-    private final AuditLogRepository repository;
+    private final AuditLogService auditLogService;
 
     @GetMapping
     public List<AuditLogResponseDto> list(
@@ -26,10 +25,6 @@ public class AuditLogController {
             @RequestParam(required = false) Long entityId,
             @RequestParam(required = false) AuditAction action,
             @RequestParam(required = false) AuditActor actor) {
-        var spec = AuditLogSpecifications.withFilters(entityType, entityId, action, actor);
-        var sort = Sort.by(Sort.Direction.DESC, "timestamp");
-        return repository.findAll(spec, sort).stream()
-                .map(AuditLogResponseDto::from)
-                .toList();
+        return auditLogService.list(entityType, entityId, action, actor);
     }
 }

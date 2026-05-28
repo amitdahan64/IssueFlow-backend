@@ -32,7 +32,7 @@ public class UserController {
         return UserResponseDto.from(userService.create(dto));
     }
 
-    @PostMapping("/update/{userId}")
+    @PatchMapping("/{userId}")
     public ResponseEntity<Void> update(@PathVariable Long userId,
                                        @Valid @RequestBody UserUpdateDto dto) {
         userService.update(userId, dto);

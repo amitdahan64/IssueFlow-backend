@@ -22,7 +22,6 @@ public class CsvController {
 
     @GetMapping("/export")
     public void export(@RequestParam Long projectId, HttpServletResponse response) throws IOException {
-        response.setStatus(200);
         response.setContentType("text/csv;charset=UTF-8");
         response.setHeader("Content-Disposition",
                 "attachment; filename=\"tickets-" + projectId + ".csv\"");
